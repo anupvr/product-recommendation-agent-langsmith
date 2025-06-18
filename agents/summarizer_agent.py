@@ -16,17 +16,20 @@ def summarize_agent(state: dict) -> dict:
     top_product = state.get("top_product")
     reasoning = state.get("reasoning")
 
-    if not top_product:
-        print("[Summarizer Agent] ❌ No top product found.")
-    if not reasoning:
-        print("[Summarizer Agent] ❌ No reasoning found.")
-
     if not top_product or not reasoning:
+        print("[Summarizer Agent] ❌ Missing data.")
         summary = "No recommendation could be made for your query."
     else:
+        # 🧠 Let GPT summarize/polish the explanation
+        prompt = (
+            f"A product was recommended for the query: '{query}'\n\n"
+            f"Reason for recommendation:\n{reasoning}\n\n"
+            f"Write a 2-line polished summary with a touch of persuasion."
+        )
+        summary_text = llm([HumanMessage(content=prompt)]).content.strip()
+
         summary = (
-            f"🎯 Based on your query '{query}', here's our top recommendation:\n\n"
-            f"{reasoning}\n\n"
+            f"{summary_text}\n\n"
             f"🔗 Product Link: {top_product}"
         )
 

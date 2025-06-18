@@ -6,7 +6,7 @@ __pycache__/
 
 # Virtual environment
 PR_Agentic_LC/
-PR_LC/
+PR_LS/
 venv/
 env/
 .Python
